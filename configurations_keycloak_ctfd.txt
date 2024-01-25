@@ -1,0 +1,57 @@
+------------------------------------------------------------------------------
+Keycloak  Configuration
+
+1.Create realm with a name to your liking
+
+2.Go to Client Scopes
+	-go to roles 
+	-go to Mappers
+	-go to realm roles 
+	-change "Token Claim Name" name to roles
+	-ENABLE token id 
+	-ENABLE userinfo 
+	-Click on Save
+
+3.Go to Realm Roles
+	(we want to create 2 users for authorization)
+	create 2 roles
+	name : user          		description: ${ctfd_role}
+	name : administrator 		description: ${ctfd_role}
+
+4.Go to Client Scopes
+	-create client scope 
+	-set Name to openid
+	-set type to default
+	
+5.Create a client
+	General Settings
+		-Select OpenID Connect client type
+		-Name of your liking
+	Capability Configuration
+		-Enable Client Authentication
+		-Enable Client Authorization
+	Login Settings
+		-Set Valid redirect URIs to                <your_ctfd_domain>/redirect
+		-Valid post logout redirect URIs to        <your_ctfd_domain>
+
+--Creation of users--- 
+create user 
+	-set name 
+	-set username
+	-set email
+	-create password (disable temporary if you want to make it the pernament password)
+	-[IMPORTANT for a]add role mapping ---if "administrator"--- we can add "user" role but not necessary it is default 
+										(you can add both roles, but only administrator role will be applied) 
+										
+------------------------------------------------------------------------------
+CTFd Configuration
+
+[Currently working on Users only NOT Team mode yet  ]
+
+[On startup screen configure the CTFd platform settings as you like (name of the CTF, start-end time ,themes etc) 
+BUT skip the CYberMajor configuration at the end]
+
+1.Login as admin
+2.Browse to Admin Panel
+3.Browse to Plugins and select the Keycloak-SSO plugin
+4.Add the credentials of your Keycloak client instance 
